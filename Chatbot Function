@@ -1,0 +1,60 @@
+##Install Libraries
+!pip install transformers torch
+
+###Import Libraries
+from transformers import pipeline
+
+###Load AI Model
+generator = pipeline(
+    "text-generation",
+    model="gpt2"
+)
+
+print("AI Model Loaded Successfully")
+
+###Create Lead Saving Function
+def save_lead(user_data):
+
+    with open("leads.txt", "a") as file:
+        file.write(user_data + "\n")
+
+    print("Lead Saved Successfully")
+
+###Create Chatbot Function
+def chatbot_response(user_input):
+
+    prompt = f"""
+    You are an AI chatbot for lead generation and customer engagement.
+
+    User Query:
+    {user_input}
+
+    Give a professional and short response.
+    """
+
+    result = generator(
+        prompt,
+        max_length=80,
+        num_return_sequences=1
+    )
+
+    return result[0]["generated_text"]
+
+###Run Chatbot
+print("===== AI Chatbot for Lead Generation =====")
+
+while True:
+
+    user_input = input("\nYou: ")
+
+    if user_input.lower() == "exit":
+        print("Chatbot Closed")
+        break
+
+    response = chatbot_response(user_input)
+
+    print("\nBot:", response)
+
+    # Save lead if email/contact shared
+    if "@" in user_input or "contact" in user_input.lower():
+        save_lead(user_input)
