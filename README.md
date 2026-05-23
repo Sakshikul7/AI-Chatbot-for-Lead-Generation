@@ -1,7 +1,5 @@
 # AI-Chatbot-for-Lead-Generation
 
-# AI Chatbot for Lead Generation
-
 ## Overview
 
 This project is an AI-powered chatbot developed using Python and Hugging Face Transformers for automated customer interaction and lead generation.
